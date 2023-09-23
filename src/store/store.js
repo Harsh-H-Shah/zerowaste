@@ -116,7 +116,7 @@ export const useStore = create((set) => ({
   endDate: "2023-06-30",
   updateEndDate: (newEndDate) => set(() => ({ endDate: newEndDate })),
 
-  // global samling period
+  // global sampling period
   samplingPeriod: "daily",
   updateSamplingPeriod: (newSamplingPeriod) => set(() => ({ samplingPeriod: newSamplingPeriod })),
 

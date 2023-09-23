@@ -3,17 +3,17 @@
 .header {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: start; /* Adjusted for proper alignment */
   padding: 0.25rem;
-  background-color: #000000; /* Black background color */
+  background-color: #3b3b41; /* Grey background color */
   color: #ffffff; /* White text color */
   font-family: 'Poppins', system-ui; /* Use Poppins Google Font */
   /* position: absolute; Fixed position */
   top: 0; /* Stick to the top of the screen */
   width: 100%; /* Cover the entire horizontal viewport */
-  height: 10%;
+  height: 50px; /* Adjusted height */
   left: 0; /* Align to the left */
-  z-index: 900;
+  z-index: 99999;
 }
 
 .back-button {
@@ -28,34 +28,77 @@
 
 .back-button span {
   margin-right: 0.25rem;
+  margin-bottom: 0.5rem;
   font-size: 1.5rem; /* Adjust the font size for the Back button text */
 }
 
 .header-title {
-  font-size: 2rem;
-  font-weight: bold;
+  display: flex; /* To allow alignment of the green tag */
+  align-items: center;
+  justify-content: center; /* Adjusted for proper alignment */
+  margin-left: 1.5rem; /* Adjust the margin as needed */
+}
+
+.name {
+  display: flex; /* To allow alignment of the green tag */
+  align-items: center;
   color: #ffffff;
+  font-size: 1.75rem; /* Adjust the font size for the title */
+  font-weight: 600; /* Adjust the font weight for the title */
   margin-left: auto; /* Add this property to push the title to the center */
   margin-right: auto; /* Add this property to push the title to the center */
 }
 
+/* Add a green tag with the city name "Mumbai" */
+.city-tag {
+  background-color: #40822c;
+  color: white;
+  padding: 0.125rem 0.35rem;
+  margin-left: 1rem; /* Adjust the margin as needed */
+  border-radius: 4px;
+}
+
 /* Media queries for responsive font size */
 @media screen and (max-width: 768px) {
-  .header-title {
+  .name {
     font-size: 1.5rem;
   }
-  
-  .back-button span {
+
+  .header-title {
+    margin-left: 0.5rem;
+  }
+
+  .city-tag {
+    font-size: 1rem;
+    padding: 0.1rem 0.25rem;
+    margin-left: 0.5rem;
+  }
+
+  .back-button {
     font-size: 1.25rem; /* Adjust the font size for the Back button text */
   }
 }
 
 @media screen and (max-width: 480px) {
-  .header-title {
+  .name {
     font-size: 1.125rem;
   }
-  
+
+  .header-title {
+    margin-left: 0.25rem;
+  }
+
+  .city-tag {
+    font-size: 0.75rem;
+    padding: 0.1rem 0.25rem;
+    margin-left: 0.25rem;
+  }
+
   .back-button span {
+    margin-right: 0.05rem;
+  }
+
+  .back-button {
     font-size: 1rem; /* Adjust the font size for the Back button text */
   }
 }

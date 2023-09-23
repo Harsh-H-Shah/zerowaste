@@ -10,7 +10,10 @@ const Header = () => {
       <div className="back-button" onClick={handleBackClick}>
         <span>&larr;</span> Back
       </div>
-      <h1 className="header-title">ZeroWaste Dashboard 3.0</h1>
+      <div className="header-title">
+        <p className="name">ZeroWaste Dashboard 3.0</p>
+        <p className="city-tag">Mumbai</p>
+      </div>
     </header>
   );
 };

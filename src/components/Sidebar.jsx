@@ -1,36 +1,36 @@
 // This component is responsible for rendering the sidebar and its content.
 
 // React imports
-import { useState } from "react";
+import { useState } from 'react';
 
 // Zustand imports
-import { useStore } from "../store/store.js";
+import { useStore } from '../store/store.js';
 
 // Import styles
-import "../styles/Sidebar.css";
+import '../styles/Sidebar.css';
 
 // Import fontawesome icons
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faLayerGroup,
   faSlidersH,
   faChartBar,
   faCircleInfo as faInfo,
   faTimes,
-} from "@fortawesome/free-solid-svg-icons";
+} from '@fortawesome/free-solid-svg-icons';
 
 // Import custom components
-import LayersContent from "./LayersContent";
-import ControlsContent from "./ControlsContent";
-import AboutContent from "./AboutContent";
+import LayersContent from './LayersContent';
+import ControlsContent from './ControlsContent';
+import AboutContent from './AboutContent';
 
 // Function to format the date for the date picker
-const defaultStartDate = new Date("2023-06-30");
+const defaultStartDate = new Date('2023-06-30');
 
 function formatDate(date) {
   const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
   return `${year}-${month}-${day}`;
 }
 
@@ -45,10 +45,24 @@ const Sidebar = () => {
 
   // Tabs for the sidebar
   const tabs = [
-    { icon: <FontAwesomeIcon icon={faLayerGroup} />, label: "Layers" },
-    { icon: <FontAwesomeIcon icon={faSlidersH} />, label: "Controls" },
-    { icon: <FontAwesomeIcon icon={faChartBar} />, label: "Chart" },
-    { icon: <FontAwesomeIcon icon={faInfo} />, label: "About" },
+    {
+      icon: (
+        <FontAwesomeIcon icon={faLayerGroup} style={{ color: '#aba8a8' }} />
+      ),
+      label: 'Layers',
+    },
+    {
+      icon: <FontAwesomeIcon icon={faSlidersH} style={{ color: '#aba8a8' }} />,
+      label: 'Controls',
+    },
+    {
+      icon: <FontAwesomeIcon icon={faChartBar} style={{ color: '#aba8a8' }} />,
+      label: 'Chart',
+    },
+    {
+      icon: <FontAwesomeIcon icon={faInfo} style={{ color: '#aba8a8' }} />,
+      label: 'About',
+    },
   ];
 
   // Function to render the sidebar content based on the active tab
@@ -73,7 +87,7 @@ const Sidebar = () => {
         {tabs.map((tab, index) => (
           <div
             key={index}
-            className={`sidebar-tab ${activeTab === index ? "active" : ""}`}
+            className={`sidebar-tab ${activeTab === index ? 'active' : ''}`}
           >
             <button className="tab-button" onClick={() => toggleTab(index)}>
               {tab.icon}
@@ -81,13 +95,13 @@ const Sidebar = () => {
           </div>
         ))}
       </div>
-      <div className={`sidebar-content ${activeTab !== null ? "visible" : ""}`}>
+      <div className={`sidebar-content ${activeTab !== null ? 'visible' : ''}`}>
         {activeTab !== null && (
           <>
             <div className="sidebar-content-heading">
               <h2>{tabs[activeTab]?.label}</h2>
               <button className="close-button" onClick={() => toggleTab(null)}>
-                <FontAwesomeIcon icon={faTimes} />
+                <FontAwesomeIcon icon={faTimes} style={{ color: '#aba8a8' }} />
               </button>
             </div>
             <div className="sidebar-content-body">{renderSidebarContent()}</div>

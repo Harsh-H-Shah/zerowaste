@@ -15,7 +15,7 @@ export const wardStyle = (feature) => {
   if (feature.properties && feature.properties[selectedParameter]) {
     return {
       fillColor: getColor(feature.properties[selectedParameter]),
-      weight: 2,
+      weight: 1,
       opacity: 1,
       color: "#000000",
       fillOpacity: 0.9,
