@@ -100,9 +100,6 @@ const Sidebar = () => {
           <>
             <div className="sidebar-content-heading">
               <h2>{tabs[activeTab]?.label}</h2>
-              <button className="close-button" onClick={() => toggleTab(null)}>
-                <FontAwesomeIcon icon={faTimes} style={{ color: '#aba8a8' }} />
-              </button>
             </div>
             <div className="sidebar-content-body">{renderSidebarContent()}</div>
           </>

@@ -11,7 +11,7 @@
   font-family: Poppins, sans-serif;
   padding: 0;
   margin: 0;
-  z-index: 11111;
+  z-index: 900;
   /* overflow: hidden; */
   box-sizing: border-box;
   display: flex;
@@ -21,16 +21,16 @@
 }
 
 .sidebar-content {
-  position: relative;
+  position: absolute;
   left: 4rem;
-  width: 20rem;
+  width: 15rem;
   height: 100vh;
   background-color: #1d1d23;
   font-family: Poppins, sans-serif;
   color: #ffffff;
   padding: 0;
   margin: 0;
-  z-index: 99999;
+  z-index: 900;
   /* overflow: hidden; */
   transform: scaleX(0);
   transform-origin: left;
@@ -42,7 +42,6 @@
 .sidebar-content.visible {
   transform: scaleX(1);
   padding: 0.5rem;
-  height: 100vh;
 }
 
 .sidebar-content-heading {
@@ -121,13 +120,33 @@ FontAwesomeIcon {
   height: auto;
 }
 
-.close-button {
-  background: none;
-  border: none;
-  cursor: pointer;
+/* Media queries for responsive font size */
+@media screen and (max-width: 768px) {
+  .sidebar-content {
+    width: 15rem;
+  }
 }
 
-.close-button svg {
-  width: 1rem;
-  height: auto;
+@media screen and (max-width: 480px) {
+  .name {
+    font-size: 1.125rem;
+  }
+
+  .header-title {
+    margin-left: 0.25rem;
+  }
+
+  .city-tag {
+    font-size: 0.75rem;
+    padding: 0.1rem 0.25rem;
+    margin-left: 0.25rem;
+  }
+
+  .back-button span {
+    margin-right: 0.05rem;
+  }
+
+  .back-button {
+    font-size: 1rem; /* Adjust the font size for the Back button text */
+  }
 }

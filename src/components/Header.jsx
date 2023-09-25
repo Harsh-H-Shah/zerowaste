@@ -7,9 +7,9 @@ const Header = () => {
 
   return (
     <header className="header">
-      <div className="back-button" onClick={handleBackClick}>
+      {/* <div className="back-button" onClick={handleBackClick}>
         <span>&larr;</span> Back
-      </div>
+      </div> */}
       <div className="header-title">
         <p className="name">ZeroWaste Dashboard 3.0</p>
         <p className="city-tag">Mumbai</p>
