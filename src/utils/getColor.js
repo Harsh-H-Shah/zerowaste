@@ -3,13 +3,7 @@
 // Zustand imports
 import { useStore } from "../store/store.js";
 
-export default function getColor(value) {
-  // get the selected parameter from the store to determine the color scale
-  const selectedParameter = useStore((state) => state.selectedParameter);
-  const currentLayer = useStore((state) => state.currentLayer);
-
-  // define the color scale for each parameter
-  // total waste
+// define the color scale
   const magma = [
     "#000004",
     "#140e36",
@@ -25,65 +19,89 @@ export default function getColor(value) {
     "#f6f64e",
   ];
 
-  // dry waste
   const viridis = [
-    "#440154",
-    "#482878",
-    "#3e4989",
-    "#31688e",
-    "#26828e",
-    "#1f9e89",
-    "#35b779",
-    "#6ece58",
-    "#b5de2b",
     "#fde725",
+    "#c2df23",
+    "#86d549",
+    "#52c569",
+    "#2ab07f",
+    "#1e9b8a",
+    "#25858e",
+    "#2d708e",
+    "#38588c",
+    "#433e85",
+    "#482173",
+    "#440154"
   ];
 
-  // wet waste
   const turbo = [
-    "#301a1e",
-    "#7a2f5e",
-    "#bf518a",
-    "#e87f8f",
-    "#ffcc6e",
-    "#ffd55b",
-    "#ffed18",
-    "#f8f90a",
-    "#e1f82e",
-    "#f7f7f7"
+    "#30126a",
+    "#2c4e7e",
+    "#237e8c",
+    "#1fa088",
+    "#28c485",
+    "#3fdc7e",
+    "#65f875",
+    "#9df971",
+    "#d4fe77",
+    "#f6fe85",
+    "#fefa8a",
+    "#fcf392",
   ];
+
   
-  // population
   const inferno = [
     "#000004",
-    "#160b39",
-    "#420a68",
-    "#6a176e",
-    "#932667",
-    "#bc3754",
-    "#dd513a",
-    "#f37819",
-    "#fca50a",
-    "#f6d746",
+    "#0a1040",
+    "#2a1d68",
+    "#502b79",
+    "#743e7f",
+    "#965b75",
+    "#b87c63",
+    "#d9a151",
+    "#f7c440",
+    "#fec72e",
+    "#f9ea17",
     "#fcffa4",
   ];
 
-  // weight
+
   const plasma = [
     "#0d0887",
-    "#3a02b1",
-    "#6302a1",
-    "#8b0498",
-    "#b40486",
-    "#d6608d",
-    "#e8819e",
-    "#f9a8b6",
-    "#fbc6d2",
-    "#feebe2",
-    "#fff7f3",
-  ];
+    "#3701a3",
+    "#6200a8",
+    "#8e03a8",
+    "#b63f97",
+    "#d76c6d",
+    "#e8965e",
+    "#f7bc45",
+    "#f0e96f",
+    "#fefc97",
+    "#fcffa4",
+    "#fcfdbf",
+];
+
+
+export function getColorSchemas() {
+  return {
+    "Magma": magma,
+    "Viridis": viridis,
+    "Turbo": turbo,
+    "Inferno": inferno,
+    "Plasma": plasma
+  }
+}
+
+export default function getColor(value) {
+  // get the selected parameter from the store to determine the color scale
+  const selectedParameter = useStore((state) => state.selectedParameter);
+  const currentLayer = useStore((state) => state.currentLayer);
+  const selectedColorPalette = useStore((state) => state.selectedColorPalette);
 
   // define some variables
+
+  // get the color schema on a variable to be added to the selected parameter
+  let colorSchema;
 
   // get the value range of the selected parameter
   let valueRange;
@@ -101,42 +119,63 @@ export default function getColor(value) {
     }
   }
 
+  // assign the color schema based on the selected color palette
+  switch (selectedColorPalette) {
+    case "Magma":
+      colorSchema = magma;
+      break;
+    case "Viridis":
+      colorSchema = viridis;
+      break;
+    case "Turbo":
+      colorSchema = turbo;
+      break;
+    case "Inferno":
+      colorSchema = inferno;
+      break;
+    case "Plasma":
+      colorSchema = plasma;
+      break;
+    default:
+      throw new Error(`Invalid color palette: ${selectedColorPalette}`);
+  }
+
   // switch cases
   switch (currentLayer) {
     case "ward":
       assignRangesAndColorScale(selectedParameter, {
-        "population": [18000, 180000, inferno],
-        "dry_waste": [12000, 120000, viridis],
-        "wet_waste": [18000, 180000, turbo],
-        "total_waste": [24000, 240000, magma],
-        "weight": [1, 10, plasma]
+        "population": [18000, 180000, colorSchema],
+        "dry_waste": [12000, 120000, colorSchema],
+        "wet_waste": [18000, 180000, colorSchema],
+        "total_waste": [24000, 240000, colorSchema],
+        "weight": [1, 10, colorSchema]
       });
       break;
     case "prabhag":
       assignRangesAndColorScale(selectedParameter, {
-        "population": [1800, 18000, inferno],
-        "dry_waste": [1200, 12000, viridis],
-        "wet_waste": [1800, 18000, turbo],
-        "total_waste": [2400, 24000, magma],
-        "weight": [1, 10, plasma]
+        "population": [1800, 18000, colorSchema],
+        "dry_waste": [1200, 12000, colorSchema],
+        "wet_waste": [1800, 18000, colorSchema],
+        "total_waste": [2400, 24000, colorSchema],
+        "weight": [1, 10, colorSchema]
       });
       break;
     case "region":
       assignRangesAndColorScale(selectedParameter, {
-        "population": [180, 1800, inferno],
-        "dry_waste": [120, 1200, viridis],
-        "wet_waste": [180, 1800, turbo],
-        "total_waste": [240, 2400, magma],
-        "weight": [1, 10, plasma]
+        "population": [180, 1800, colorSchema],
+        "dry_waste": [120, 1200, colorSchema],
+        "wet_waste": [180, 1800, colorSchema],
+        "total_waste": [240, 2400, colorSchema],
+        "weight": [1, 10, colorSchema]
       });
       break;
     case "building":
       assignRangesAndColorScale(selectedParameter, {
-        "population": [18, 180, inferno],
-        "dry_waste": [12, 120, viridis],
-        "wet_waste": [18, 180, turbo],
-        "total_waste": [24, 240, magma],
-        "weight": [1, 10, plasma]
+        "population": [18, 180, colorSchema],
+        "dry_waste": [12, 120, colorSchema],
+        "wet_waste": [18, 180, colorSchema],
+        "total_waste": [24, 240, colorSchema],
+        "weight": [1, 10, colorSchema]
       });
       break;
     default:

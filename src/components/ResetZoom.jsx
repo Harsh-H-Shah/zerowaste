@@ -1,18 +1,18 @@
 // This component helps reset the zoom and bounds of the map
 
 // React imports
-import { useEffect } from "react";
-import PropTypes from "prop-types";
+import { useEffect } from 'react';
+import PropTypes from 'prop-types';
 
 // React Leaflet imports
-import { useMap } from "react-leaflet";
-import L from "leaflet";
+import { useMap } from 'react-leaflet';
+import L from 'leaflet';
 
 // Import Font Awesome styles
-import "@fortawesome/fontawesome-free/css/all.min.css";
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
 // Import styles
-import "../styles/ResetZoom.css";
+import '../styles/ResetZoom.css';
 
 // Custom Hook for creating Leaflet Control
 const useLeafletButton = (props) => {
@@ -23,11 +23,11 @@ const useLeafletButton = (props) => {
     const button = L.control({ position });
 
     button.onAdd = function () {
-      this._btn = L.DomUtil.create("button", "reset-zoom-btn");
+      this._btn = L.DomUtil.create('button', 'reset-zoom-btn');
 
       // Create the icon element
-      const icon = document.createElement("i");
-      icon.className = "fas fa-undo"; // Use Font Awesome class for the reset icon
+      const icon = document.createElement('i');
+      icon.className = 'fas fa-home'; // Use Font Awesome class for the reset icon
 
       // Append the icon element to the button
       this._btn.appendChild(icon);
@@ -56,7 +56,7 @@ ResetZoom.propTypes = {
 };
 
 ResetZoom.defaultProps = {
-  position: "topright",
+  position: 'topright',
   onClick: () => {},
 };
 

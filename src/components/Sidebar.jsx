@@ -36,11 +36,12 @@ function formatDate(date) {
 
 const Sidebar = () => {
   // State to keep track of which tab is active
-  const [activeTab, setActiveTab] = useState(null);
+  const activeTab = useStore((state) => state.activeTab);
+  const updateActiveTab = useStore((state) => state.updateActiveTab);
 
   // Function to toggle the active tab
   const toggleTab = (index) => {
-    setActiveTab(activeTab === index ? null : index);
+    updateActiveTab(activeTab === index ? null : index);
   };
 
   // Tabs for the sidebar

@@ -23,6 +23,7 @@ import ZoomToBounds from './ZoomToBounds';
 import InfoControl from './InfoControl';
 import DrillUpButton from './DrillUpButton.jsx';
 import Sidebar from './Sidebar.jsx';
+import ColorPicker from './ColorPicker.jsx';
 
 // util imports
 import {
@@ -959,8 +960,13 @@ function Map() {
       {/* Sidebar goes here */}
       <Sidebar />
 
+      {/* Color picker goes here */}
+      <ColorPicker />
+
+      {/* Legend goes here */}
+
       {/* Zoom control goes here */}
-      <ZoomControl position="bottomright" />
+      <ZoomControl position="topright" />
 
       {/* Layer Control to toggle Tile Layers */}
       <LayersControl position="topright">
@@ -976,7 +982,7 @@ function Map() {
 
       {/* Add info control here */}
       <InfoControl
-        position="topright"
+        position="bottomright"
         content={{ selectedFeatureName, currentLayer, selectedFeature }}
       />
 

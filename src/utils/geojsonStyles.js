@@ -18,7 +18,7 @@ export const wardStyle = (feature) => {
       weight: 1,
       opacity: 1,
       color: "#000000",
-      fillOpacity: 0.9,
+      fillOpacity: 0.7,
     };
   } else {
     return {
@@ -43,7 +43,7 @@ export const prabhagStyle = (feature) => {
       weight: 2,
       opacity: 1,
       color: "#000000",
-      fillOpacity: 0.9,
+      fillOpacity: 0.7,
     };
   } else {
     return {
@@ -68,7 +68,7 @@ export const regionStyle = (feature) => {
       weight: 2,
       opacity: 1,
       color: "#000000",
-      fillOpacity: 0.9,
+      fillOpacity: 0.7,
     };
   } else {
     return {
@@ -93,7 +93,7 @@ export const buildingStyle = (feature) => {
       weight: 2,
       opacity: 1,
       color: "#000000",
-      fillOpacity: 0.9,
+      fillOpacity: 0.7,
     };
   } else {
     return {

@@ -1,0 +1,66 @@
+.color-picker-parent {
+  position: absolute;
+  bottom: 1rem;
+  left: 5rem;
+  z-index: 900;
+}
+
+.color-picker {
+  width: 19rem;
+  height: 3rem;
+  z-index: 900;
+  background: rgba(27, 47, 59, 0.68);
+  border-radius: 0.25rem;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(4.1px);
+  -webkit-backdrop-filter: blur(4.1px);
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  flex-direction: row;
+  padding: 0rem 1rem;
+  color: #fff;
+}
+
+.color-schema {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-display: row;
+  margin: 0rem 0.5rem;
+}
+
+.color-schema-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-display: row;
+  color: #fff;
+}
+
+.color-schema-element {
+  width: 1rem;
+  height: 1rem;
+}
+
+.palette-icon svg {
+  width: 1.25rem;
+  height: auto;
+  margin: 0 1rem;
+}
+
+.color-picker-container {
+  position: relative;
+  display: flex;
+  justify-content: start;
+  flex-direction: column;
+  padding: 0.5rem 1rem;
+  margin: 0.5rem 0;
+  width: 17rem;
+  z-index: 900;
+  background: rgba(27, 47, 59, 0.68);
+  border-radius: 0.25rem;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(4.1px);
+  -webkit-backdrop-filter: blur(4.1px);
+}

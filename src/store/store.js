@@ -123,4 +123,12 @@ export const useStore = create((set) => ({
   // selected Waste Type
   selectedParameter: "total_waste",
   updateSelectedParameter: (newParameter) => set(() => ({ selectedParameter: newParameter })),
+
+  // selected color pallette
+  selectedColorPalette: "Magma",
+  updateSelectedColorPalette: (newColorPalette) => set(() => ({ selectedColorPalette: newColorPalette })),
+
+  // selected tab from the sidebar
+  activeTab: null,
+  updateActiveTab: (newTab) => set(() => ({ activeTab: newTab })),
 }));
