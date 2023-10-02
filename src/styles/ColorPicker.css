@@ -3,6 +3,7 @@
   bottom: 1rem;
   left: 5rem;
   z-index: 900;
+  cursor: pointer;
 }
 
 .color-picker {

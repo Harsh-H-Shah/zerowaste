@@ -1,10 +1,10 @@
 // This is the map component. It will render the map.
 
 // React imports
-import { useEffect } from 'react';
+import { useEffect } from "react";
 
 // Zustand imports
-import { useStore } from '../store/store.js';
+import { useStore } from "../store/store.js";
 
 // React Leaflet imports
 import {
@@ -13,17 +13,17 @@ import {
   LayersControl,
   GeoJSON,
   ZoomControl,
-} from 'react-leaflet';
-import 'leaflet/dist/leaflet.css';
+} from "react-leaflet";
+import "leaflet/dist/leaflet.css";
 const { BaseLayer } = LayersControl;
-import L from 'leaflet';
+import L from "leaflet";
 
 // Custom Components
-import ZoomToBounds from './ZoomToBounds';
-import InfoControl from './InfoControl';
-import DrillUpButton from './DrillUpButton.jsx';
-import Sidebar from './Sidebar.jsx';
-import ColorPicker from './ColorPicker.jsx';
+import ZoomToBounds from "./ZoomToBounds";
+import InfoControl from "./InfoControl";
+import DrillUpButton from "./DrillUpButton.jsx";
+import Sidebar from "./Sidebar.jsx";
+import ColorPicker from "./ColorPicker.jsx";
 
 // util imports
 import {
@@ -31,13 +31,13 @@ import {
   prabhagStyle,
   regionStyle,
   buildingStyle,
-} from '../utils/geojsonStyles.js';
-import { tileLayers } from '../utils/tileLayers.js';
+} from "../utils/geojsonStyles.js";
+import { tileLayers } from "../utils/tileLayers.js";
 
 // api imports
-import fetchWasteDataV1 from '../utils/fetchWasteDataV1.js';
-import fetchGeoDataV1 from '../utils/fetchGeoDataV1.js';
-import ResetZoom from './ResetZoom.jsx';
+import fetchWasteDataV1 from "../utils/fetchWasteDataV1.js";
+import fetchGeoDataV1 from "../utils/fetchGeoDataV1.js";
+import ResetZoom from "./ResetZoom.jsx";
 // import useFetchGeoDataV2 from "../utils/FetchGeoDataV2.js";
 
 // some map options and constants
@@ -48,15 +48,15 @@ const maxZoom = 18;
 const minZoom = 10;
 const zoomSnap = 0.1;
 const zoomDelta = 1;
-const mapStyle = { height: '100%', width: '100%' }; // dimension of the map
+const mapStyle = { height: "100%", width: "100%" }; // dimension of the map
 const touchZoom = false;
 const dragging = true;
 
 // layer names as shown in geoserver
-const wardLayerName = 'geonode:wards_v4';
-const prabhagLayerName = 'geonode:prabhags_2023_v3';
-const regionLayerName = 'geonode:regions0';
-const buildingLayerName = 'geonode:buildings10';
+const wardLayerName = "geonode:wards_v4";
+const prabhagLayerName = "geonode:prabhags_2023_v3";
+const regionLayerName = "geonode:regions0";
+const buildingLayerName = "geonode:buildings10";
 
 // feature bounds
 var featureBounds = null;
@@ -176,6 +176,15 @@ function Map() {
 
   // selected parameter and function to update it
   const selectedParameter = useStore((state) => state.selectedParameter);
+  const updateSelectedParameter = useStore(
+    (state) => state.updateSelectedParameter
+  );
+
+  // selected color palette and function to update it
+  const selectedColorPalette = useStore((state) => state.selectedColorPalette);
+  const updateSelectedColorPalette = useStore(
+    (state) => state.updateSelectedColorPalette
+  );
 
   // LAYER HEIRARCHY
   // ward: 1
@@ -211,7 +220,7 @@ function Map() {
     else if (layerNumber === 4) {
       featureName = e.target.feature.properties.name;
     } else {
-      console.log('Invalid Feature Clicked');
+      console.log("Invalid Feature Clicked");
     }
 
     // update selected feature and its name
@@ -332,7 +341,7 @@ function Map() {
     ) => {
       // build query params
       let params = {
-        admin_level: 'ward',
+        admin_level: "ward",
         from_date: startDate,
         to_date: endDate,
         sampling_period: samplingPeriod,
@@ -361,7 +370,7 @@ function Map() {
     const mergeGeoAndWasteData = (geoData, wardWasteData, featureName) => {
       // check if ward geo data and ward waste data are present
       if (!wardWasteData || !geoData) {
-        console.error('Error: Ward Geo Data or Ward Waste Data is missing');
+        console.error("Error: Ward Geo Data or Ward Waste Data is missing");
         return;
       }
 
@@ -391,7 +400,7 @@ function Map() {
     };
 
     // merge ward geo data and ward waste data
-    const mergedGeoData = mergeGeoAndWasteData(geoData, wardWasteData, 'id');
+    const mergedGeoData = mergeGeoAndWasteData(geoData, wardWasteData, "id");
     // console.log("Merged Ward Geo Data: ", mergedGeoData);
 
     // update ward data
@@ -433,7 +442,7 @@ function Map() {
     ) => {
       // build query params
       let params = {
-        admin_level: 'prabhag',
+        admin_level: "prabhag",
         from_date: startDate,
         to_date: endDate,
         sampling_period: samplingPeriod,
@@ -461,7 +470,7 @@ function Map() {
       // check if prabhag geo data and prabhag waste data are present
       if (!prabhagWasteData || !geoData) {
         console.error(
-          'Error: Prabhag Geo Data or Prabhag Waste Data is missing'
+          "Error: Prabhag Geo Data or Prabhag Waste Data is missing"
         );
         return;
       }
@@ -492,7 +501,7 @@ function Map() {
     };
 
     // merge prabhag geo data and prabhag waste data
-    const mergedGeoData = mergeGeoAndWasteData(geoData, prabhagWasteData, 'id');
+    const mergedGeoData = mergeGeoAndWasteData(geoData, prabhagWasteData, "id");
     // console.log("Merged Prabhag Geo Data: ", mergedGeoData);
 
     // condition to check if geo data contains any features
@@ -519,9 +528,9 @@ function Map() {
       updateDrilledDownWard(selectedFeature);
 
       // update current layer
-      updateCurrentLayer('prabhag');
+      updateCurrentLayer("prabhag");
     } else {
-      alert('No Prabhags Found for this Ward');
+      alert("No Prabhags Found for this Ward");
       updateSelectedWardName(null);
       updateHasDrilledDown(false);
     }
@@ -556,7 +565,7 @@ function Map() {
     ) => {
       // build query params
       let params = {
-        admin_level: 'region',
+        admin_level: "region",
         from_date: startDate,
         to_date: endDate,
         sampling_period: samplingPeriod,
@@ -584,7 +593,7 @@ function Map() {
     const mergeGeoAndWasteData = (geoData, regionWasteData, featureName) => {
       // check if region geo data and region waste data are present
       if (!regionWasteData || !geoData) {
-        console.error('Error: Region Geo Data or Region Waste Data is missing');
+        console.error("Error: Region Geo Data or Region Waste Data is missing");
         return;
       }
 
@@ -614,7 +623,7 @@ function Map() {
     };
 
     // merge region geo data and region waste data
-    const mergedGeoData = mergeGeoAndWasteData(geoData, regionWasteData, 'id');
+    const mergedGeoData = mergeGeoAndWasteData(geoData, regionWasteData, "id");
     // console.log("Merged Region Geo Data: ", mergedGeoData);
 
     // condition to check if geo data contains any features
@@ -638,9 +647,9 @@ function Map() {
       updatePrabhagBounds(prabhagBounds);
 
       // update current layer
-      updateCurrentLayer('region');
+      updateCurrentLayer("region");
     } else {
-      alert('No Regions Found for this Prabhag');
+      alert("No Regions Found for this Prabhag");
       updateSelectedPrabhagName(null);
       // updateHasDrilledDown(false);
     }
@@ -675,7 +684,7 @@ function Map() {
     ) => {
       // build query params
       let params = {
-        admin_level: 'building',
+        admin_level: "building",
         from_date: startDate,
         to_date: endDate,
         sampling_period: samplingPeriod,
@@ -703,7 +712,7 @@ function Map() {
       // check if building geo data and building waste data are present
       if (!buildingWasteData || !geoData) {
         console.error(
-          'Error: Building Geo Data or Building Waste Data is missing'
+          "Error: Building Geo Data or Building Waste Data is missing"
         );
         return;
       }
@@ -737,7 +746,7 @@ function Map() {
     const mergedGeoData = mergeGeoAndWasteData(
       geoData,
       buildingWasteData,
-      'fid'
+      "fid"
     );
     // console.log("Merged Building Geo Data: ", mergedGeoData);
 
@@ -762,9 +771,9 @@ function Map() {
       updateRegionBounds(regionBounds);
 
       // update current layer
-      updateCurrentLayer('building');
+      updateCurrentLayer("building");
     } else {
-      alert('No Buildings Found for this Region');
+      alert("No Buildings Found for this Region");
       updateSelectedRegionName(null);
       // updateHasDrilledDown(false);
     }
@@ -784,7 +793,7 @@ function Map() {
   const handleBuildingDrillDown = async (e) => {
     // since we are at the last layer, we will not drill down any further
     // we will just show the building info
-    alert('No Further Drill Down Possible!');
+    alert("No Further Drill Down Possible!");
   };
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -798,9 +807,9 @@ function Map() {
     // based on current layer, we will drill up to the previous layer
     // building -> region
     // layer 4 -> layer 3
-    if (currentLayer === 'building') {
+    if (currentLayer === "building") {
       // set current layer to region
-      updateCurrentLayer('region');
+      updateCurrentLayer("region");
 
       // update filtered building data - make it null to free up memory
       updateFilteredBuildingData(null);
@@ -817,9 +826,9 @@ function Map() {
     }
     // region -> prabhag
     // layer 3 -> layer 2
-    else if (currentLayer === 'region') {
+    else if (currentLayer === "region") {
       // set current layer to prabhag
-      updateCurrentLayer('prabhag');
+      updateCurrentLayer("prabhag");
 
       // update filtered region data - make it null to free up memory
       updateFilteredRegionData(null);
@@ -836,9 +845,9 @@ function Map() {
     }
     // prabhag -> ward
     // layer 2 -> layer 1
-    else if (currentLayer === 'prabhag') {
+    else if (currentLayer === "prabhag") {
       // set current layer to ward
-      updateCurrentLayer('ward');
+      updateCurrentLayer("ward");
 
       // update filtered prabhag data - make it null to free up memory
       updateFilteredPrabhagData(null);
@@ -859,9 +868,9 @@ function Map() {
     // if layer number is 1, then we are at the ward level
     // layer 1 -> NO DRILL UP POSSIBLE
     // this code is not needed because we are disabling the drill up button when layer number is 1
-    else if (currentLayer === 'ward') {
+    else if (currentLayer === "ward") {
       // give alert that no more drill up is possible
-      alert('No further drill up possible');
+      alert("No further drill up possible");
     }
   };
 
@@ -997,16 +1006,16 @@ function Map() {
       )}
 
       {/* ward geojson layer */}
-      {currentLayer === 'ward' && <WardLayer />}
+      {currentLayer === "ward" && <WardLayer />}
 
       {/* prabhag geojson layer */}
-      {currentLayer === 'prabhag' && <PrabhagLayer />}
+      {currentLayer === "prabhag" && <PrabhagLayer />}
 
       {/* region geojson layer */}
-      {currentLayer === 'region' && <RegionLayer />}
+      {currentLayer === "region" && <RegionLayer />}
 
       {/* building geojson layer */}
-      {currentLayer === 'building' && <BuildingLayer />}
+      {currentLayer === "building" && <BuildingLayer />}
 
       {/* Fit Map Bounds */}
       {mapBounds.length !== 0 && <ZoomToBounds bounds={mapBounds} />}
