@@ -3,6 +3,12 @@
   bottom: 1rem;
   left: 5rem;
   z-index: 900;
+  transition: left 0.5s ease;
+}
+
+.left {
+  position: absolute;
+  left: 20rem;
 }
 
 .color-picker {

@@ -22,6 +22,7 @@ import {
 // Import custom components
 import LayersContent from './LayersContent';
 import ControlsContent from './ControlsContent';
+import Chart from './Chart';
 import AboutContent from './AboutContent';
 
 // Function to format the date for the date picker
@@ -74,7 +75,7 @@ const Sidebar = () => {
       case 1:
         return <ControlsContent />;
       case 2:
-        return <div>Content for Chart tab</div>;
+        return <Chart />;
       case 3:
         return <AboutContent />;
       default:

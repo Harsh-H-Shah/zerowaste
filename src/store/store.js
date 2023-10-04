@@ -131,4 +131,8 @@ export const useStore = create((set) => ({
   // selected tab from the sidebar
   activeTab: null,
   updateActiveTab: (newTab) => set(() => ({ activeTab: newTab })),
+
+  // toggle chart state
+  toggleChart: false,
+  updateToggleChart: (newToggleChart) => set(() => ({ toggleChart: newToggleChart })),
 }));

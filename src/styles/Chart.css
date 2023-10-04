@@ -100,3 +100,19 @@
   font-family: Poppins, sans-serif;
   border-radius: 0.125rem;
 }
+
+.chart-content {
+  position: absolute;
+  height: auto;
+  top: 50vh;
+  left: 50vw;
+  transform: translate(-75%, -75%);
+  background: rgba(84, 82, 82, 0.7);
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  padding: 1rem;
+  z-index: 99999;
+  color: white;
+}

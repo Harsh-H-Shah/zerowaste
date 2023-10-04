@@ -8,13 +8,34 @@ import { useStore } from '../store/store.js';
 
 // Library Imports
 import DatePicker from 'react-datepicker';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
+import { Bar } from 'react-chartjs-2';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPalette, faTimes } from '@fortawesome/free-solid-svg-icons';
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 // utils Imports
 import formatDate from '../utils/formatDate.js';
 import { format } from 'date-fns';
 
 // Import styles
-import '../styles/ControlsContent.css';
+import '../styles/Chart.css';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 
@@ -33,7 +54,7 @@ const CustomDatePicker = ({
       <DatePicker
         autocomplete="off" // to disable the browser's autocomplete
         name={Math.random().toString()} // to disable the browser's autocomplete
-        dateFormat="yyyy-MM-dd"
+        dateFormat="dd-MM-yyyy"
         id={`${idPrefix}-date`}
         selected={dateValue}
         onChange={onDateChange}
@@ -87,7 +108,7 @@ const ParameterSelector = ({ value, onChange }) => (
 );
 
 // ControlsContent component
-const ControlsContent = () => {
+const Chart = () => {
   // default start date for the date pickers
   const defaultStartDate = new Date('2023-06-30');
   const defaultEndDate = new Date('2023-06-30');
@@ -103,19 +124,91 @@ const ControlsContent = () => {
   const updateStartDate = useStore((state) => state.updateStartDate);
   const updateEndDate = useStore((state) => state.updateEndDate);
   const updateSamplingPeriod = useStore((state) => state.updateSamplingPeriod);
+  const toggleChart = useStore((state) => state.toggleChart);
+  const updateToggleChart = useStore((state) => state.updateToggleChart);
 
   // local state for the parameter selector
   const [localParameter, setLocalParameter] = useState('total_waste');
 
   // global state for the parameter selector
+  const selectedParameter = useStore((state) => state.selectedParameter);
   const updateSelectedParameter = useStore(
     (state) => state.updateSelectedParameter
   );
+
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        labels: {
+          color: '#fff',
+        },
+        position: 'top',
+        color: '#fff',
+      },
+      title: {
+        display: true,
+        text: 'Chart.js Bar Chart',
+        color: '#fff',
+      },
+    },
+    scales: {
+      x: {
+        ticks: {
+          color: 'white', // Set the color of the x-axis labels
+        },
+      },
+      y: {
+        ticks: {
+          color: 'white', // Set the color of the y-axis labels
+        },
+      },
+    },
+  };
+
+  const labels = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+  ];
+
+  const data = {
+    labels,
+    datasets: [
+      {
+        label: `${selectedParameter}`,
+        data: [65, 59, 80, 81, 56, 55, 40],
+        backgroundColor: 'rgba(53, 162, 235, 0.5)',
+        color: '#fff',
+      },
+    ],
+  };
+
+  const toggleModal = () => {
+    updateToggleChart(false);
+  };
 
   // Function to handle the submit event of the form
   const handleSubmit = (event) => {
     event.preventDefault();
     // Handle form submission logic here
+    if (localSamplingPeriod === 'daily') {
+      if (new Date(endDateValue) - new Date(startDateValue) > 2592000000) {
+        alert('Sampling Period cannot be greater than 30 days.');
+        return;
+      }
+    }
+    if (localSamplingPeriod === 'monthly') {
+      if (new Date(endDateValue) - new Date(startDateValue) > 31536000000) {
+        alert('Sampling Period cannot be greater than 1 year.');
+        return;
+      }
+    }
+    updateToggleChart(true);
     updateStartDate(startDateValue);
     updateEndDate(endDateValue);
     updateSamplingPeriod(localSamplingPeriod);
@@ -177,8 +270,26 @@ const ControlsContent = () => {
           Submit
         </button>
       </form>
+      {toggleChart && (
+        <div className="chart-container">
+          <div className="chart-content">
+            <div className="palette-icon" onClick={toggleModal}>
+              {!toggleChart ? (
+                <FontAwesomeIcon icon={faPalette} style={{ color: '#fff' }} />
+              ) : (
+                <FontAwesomeIcon
+                  icon={faTimes}
+                  style={{ color: '#fff' }}
+                  onClick={toggleModal}
+                />
+              )}
+            </div>
+            <Bar data={data} options={options} />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
-export default ControlsContent;
+export default Chart;

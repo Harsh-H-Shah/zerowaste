@@ -176,6 +176,15 @@ function Map() {
 
   // selected parameter and function to update it
   const selectedParameter = useStore((state) => state.selectedParameter);
+  const updateSelectedParameter = useStore(
+    (state) => state.updateSelectedParameter
+  );
+
+  // selected color palette and function to update it
+  const selectedColorPalette = useStore((state) => state.selectedColorPalette);
+  const updateSelectedColorPalette = useStore(
+    (state) => state.updateSelectedColorPalette
+  );
 
   // LAYER HEIRARCHY
   // ward: 1
